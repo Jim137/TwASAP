@@ -1,13 +1,25 @@
-FROM python:3.11-slim
+FROM python:3.11-alpine as base
 
-RUN git clone https://github.com/Jim137/TwASAP.git
-RUN git checkout docker
-# COPY . /TwASAP/
-ADD Docker/setup.sh /TwASAP/
-ADD Docker/exec.sh /TwASAP/
-RUN cd /TwASAP
+RUN apk add git
+RUN git clone --branch docker https://github.com/Jim137/TwASAP.git
+RUN pip install -r /TwASAP/requirements.txt
+
+WORKDIR /
+
+#########
+# Prod  #
+#########
+FROM python:3.11-alpine
+
+RUN apk add --no-cache bash && \
+    rm -rf /var/cache/apk/*
+
+COPY --from=base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=base /TwASAP /TwASAP
+
+ADD /setup.sh /TwASAP/
+ADD /exec.sh /TwASAP/
+
 WORKDIR /TwASAP
-RUN pip install -r requirements.txt
-
 ENTRYPOINT ["/bin/bash", "setup.sh"]
 CMD []
