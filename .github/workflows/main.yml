@@ -32,7 +32,7 @@ jobs:
                     printf "[default]\nconsumer_key = ${{ secrets.TWITTER_CONSUMER_KEY }}\nconsumer_secret = ${{ secrets.TWITTER_CONSUMER_SECRET }}\naccess_token = ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}\naccess_token_secret = ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}" > ~/.twarc
             -   name: Run
                 run: | 
-                    python main.py
+                    python -m TwASAP
             -   name: Commit and push to output branch
                 run: |
                     git config --global user.name "GitHub Actions"
