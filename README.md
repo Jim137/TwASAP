@@ -1,5 +1,7 @@
 # TwASAP - Twitter All newest Status Auto Push to Discord Channel Bot
 
+[![](https://img.shields.io/docker/v/jim137/twasap) ![](https://img.shields.io/docker/image-size/jim137/twasap) ![](https://img.shields.io/docker/pulls/jim137/twasap)](https://hub.docker.com/r/jim137/twasap) [![](https://img.shields.io/github/stars/jim137/twasap)](https://github.com/Jim137/TwASAP)
+
 自動推送推特所有最新狀態到Discord頻道機器人
 
 Help you to push the newest status of people you want to follow on Twitter to a Discord channel.
