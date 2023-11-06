@@ -3,9 +3,16 @@ on:
         branches:
             -   docker
 
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+
 jobs:
     docker_build:
         runs-on: ubuntu-latest
+        permissions:
+            packages: write
+            contents: read
         steps:
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v3
@@ -16,9 +23,23 @@ jobs:
               with:
                 username: jim137
                 password: ${{ secrets.DOCKER_TOKEN }}
+            - name: Log in to the Container registry
+              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              with:
+                registry: ${{ env.REGISTRY }}
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Extract metadata (tags, labels) for Docker
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                images: |
+                  jim137/twasap
+                  ghcr.io/${{ github.repository }}
             - name: Build and push
               uses: docker/build-push-action@v5
               with:
                 file: ./Docker/Dockerfile
                 push: true
-                tags: jim137/twasap:latest
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
