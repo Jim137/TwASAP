@@ -5,7 +5,7 @@ import sys
 import discord
 from discord.ext import commands
 
-from twitter import get_status
+from TwASAP.twitter import get_status
 
 token = os.getenv("DISCORD_BOT_TOKEN")
 
