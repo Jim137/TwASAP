@@ -17,8 +17,8 @@ RUN apk add --no-cache bash && \
 COPY --from=base /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=base /TwASAP /TwASAP
 
-ADD /setup.sh /TwASAP/
-ADD /exec.sh /TwASAP/
+ADD /Docker/setup.sh /TwASAP/
+ADD /Docker/exec.sh /TwASAP/
 
 WORKDIR /TwASAP
 ENTRYPOINT ["/bin/bash", "setup.sh"]
