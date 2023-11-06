@@ -2,6 +2,8 @@ on:
     push:
         branches:
             -   docker
+        tags:
+            -   'v*'
 
 env:
     REGISTRY: ghcr.io
@@ -36,6 +38,11 @@ jobs:
                 images: |
                   jim137/twasap
                   ghcr.io/${{ github.repository }}
+                tags: |
+                  type=ref,event=branch
+                  type=ref,event=pr
+                  type=semver,pattern={{version}}
+                  type=semver,pattern={{major}}.{{minor}}
             - name: Build and push
               uses: docker/build-push-action@v5
               with:
